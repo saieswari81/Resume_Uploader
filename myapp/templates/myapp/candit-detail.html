@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load myfilter %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canditate Detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+          crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container">
+      <h1 class="alert alert-danger text-center">Canditate Detail</h1>
+      <div class="row">
+        <div class="col-sm-8 shadow p-5 offset-2">
+          <h3 class="text-center"><u>Resume</u></h3>
+            {% if candit %}
+            <p>Application No: {{candit.id}}</p>
+            <img src="{{candit.profile_image.url}}" alt="No Image" class="img-fluid img-thumbnail float-end mt-2"
+                 width="250" height="250">
+            <p>Name: {{candit.name}}</p>
+            <p>Date of Birth: {{candit.dob}}</p>
+            <p>Gender: {{candit.gender}}</p>
+            <p>Address: {{candit.locality}}, {{candit.city}}, {{candit.state}}
+                - {{candit.zipcode}}</p>
+            <p>Mobile No: {{candit.mobile_num}}</p>
+            <p>Email ID: {{candit.email}}</p>
+            <p>Preferred Job Cities: {{candit.job_city|remove_special:"[]'"}}</p>
+            <p>Attachment: <a href="{{candit.my_file.url}}">Download File</a></p>
+
+            <div>
+                <form action="{% url 'candit-detail' candit.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete Resume" class="btn btn-danger">
+                </form>
+
+            </div>
+            {% endif %}
+            <div class="text-center">
+                <a class="btn btn-success" href="{% url 'home' %}">Back to Home</a>
+            </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+            crossorigin="anonymous"></script>
+
+</body>
+</html>
